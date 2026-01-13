@@ -1,16 +1,15 @@
 import joblib
+import pandas as pd
 
-# STEP 1: load files
 model = joblib.load("aqi_model.pkl")
 scaler = joblib.load("scaler.pkl")
 
-# STEP 2: sample input
-sample_input = [[18.52, 73.85, 20, 150]]
+sample_input = pd.DataFrame(
+    [[17.52, 76.20, 60, 220]],
+    columns=["latitude", "longitude", "pollutant_min", "pollutant_max"]
+)
 
-# STEP 3: scale input
 sample_scaled = scaler.transform(sample_input)
-
-# STEP 4: predict
 prediction = model.predict(sample_scaled)
 
 print("Predicted AQI (pollutant_avg):", prediction[0])
